@@ -1,0 +1,18 @@
+# Display Listening port and process
+# v 1.0
+# s/b all states where not null if filter is listen+established+wait+...
+# have dupe columns now
+$ProcColl = @()
+$listenPorts = Get-NetTCPConnection | Where-Object{$_.state -eq "Listen"} | select LocalAddress, LocalPort, RemoteAddress, OwningProcess
+foreach($1port in $listenPorts)
+{
+$ProcNm = get-process -id $1port.OwningProcess
+$output1 = "" | Select ProcessName, ProcessID, OwningProcess, ListenPortID
+$output1.ProcessName = $ProcNm.ProcessName
+$output1.ProcessID = $ProcNm.ID
+$output1.OwningProcess = $1port.OwningProcess
+$output1.ListenPortID = $1port.LocalPort
+$ProcColl += $output1
+}
+
+$ProcColl | select ProcessName, ListenPortID, ProcessID, OwningProcess 
