@@ -1,7 +1,8 @@
 # Display Listening port and process
 # v 1.0
 # s/b all states where not null if filter is listen+established+wait+...
-# have dupe columns now
+# have dupe columns currently
+
 $ProcColl = @()
 $listenPorts = Get-NetTCPConnection | Where-Object{$_.state -eq "Listen"} | select LocalAddress, LocalPort, RemoteAddress, OwningProcess
 foreach($1port in $listenPorts)
