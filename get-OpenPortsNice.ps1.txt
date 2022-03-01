@@ -1,6 +1,5 @@
-z# Display Listening port and process
-# v 1.0
-# v 1.1 w/be CIM version but does that work for 5.1 across board?
+# Display Listening port and process
+# v 1.1 add owner & parent proc / name plus help
 
 $ProcColl = @()
 $listenPorts = Get-NetTCPConnection | where{$_.OwningProcess -ne 0}| select LocalAddress, LocalPort, RemoteAddress, OwningProcess | Sort-Object OwningProcess -Unique
@@ -16,7 +15,3 @@ $ProcColl += $output1
 }
 
 $ProcColl | select TcpPort, OwningProcess, ProcessName | Sort-Object TcpPort
-
-$CimProc = gcim win32_process | where{$_.ProcessId -eq $1port.OwningProcess} # select ParentProcessID, HandleCount, ThreadCount, WorkingSetSize, CommandLine(first 100 chars)
-$CimProcOwner = Invoke-cimMethod -inputObject $CimProc -MethodName GetOwner
-
