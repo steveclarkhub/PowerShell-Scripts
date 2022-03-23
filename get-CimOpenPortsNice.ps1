@@ -1,5 +1,5 @@
 # wants? ParentProcessID, (expression: parent process name) HandleCount, ThreadCount, WorkingSetSize
-# format workingset: @{label="WorkingSetMB";expression={[math]::Round(($_.workingsetsize/1mb),0)}}
+# format (int64?) workingset: @{label="WorkingSetMB";expression={[math]::Round(($_.workingsetsize/1mb),0)}}
 # add help
 $ProcColl = @()
 $listenPorts = Get-NetTCPConnection | where{$_.OwningProcess -ne 0}| select LocalAddress, LocalPort, RemoteAddress, OwningProcess | Sort-Object OwningProcess -Unique
